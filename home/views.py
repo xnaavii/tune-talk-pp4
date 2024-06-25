@@ -1,9 +1,8 @@
 import os
 import spotipy
 from django.shortcuts import render
-from django.http import HttpResponse
 from spotipy.oauth2 import SpotifyClientCredentials
-# Create your views here.
+
 def get_spotify_client():
     """
     Set up spotify client credentials manager
@@ -44,4 +43,4 @@ def album_list(request):
 
 
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home/homepage.html')
