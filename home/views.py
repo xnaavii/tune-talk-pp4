@@ -18,26 +18,30 @@ def album_list(request):
 
     sp = get_spotify_client()
 
-    results = sp.search(q="beyonce", type="album")
+    if request.method == "GET":
 
-    albums = []
+        search = request.GET.get("search")
 
-    for album in results['albums']['items']:
-        album_info = {
-            'name': album['name'],
-            'artist': album['artists'][0]['name'],
-            'release_date': album['release_date'],
-            'artwork': album['images'][0]['url'] if album['images'] else None
+        results = sp.search(q=search, type="album")
+
+        albums = []
+
+        for album in results['albums']['items']:
+            album_info = {
+                'name': album['name'],
+                'artist': album['artists'][0]['name'],
+                'release_date': album['release_date'],
+                'artwork': album['images'][0]['url'] if album['images'] else None
+            }
+            albums.append(album_info)
+        
+        context = {
+            "albums": albums
         }
-        albums.append(album_info)
-    
-    context = {
-        "albums": albums
-    }
 
 
-    return render(request, "home/album_list.html", context)
+        return render(request, "home/album_list.html", context)
 
 
 def home(request):
-    return HttpResponse("This is working!")
+    return render(request, 'base.html')
