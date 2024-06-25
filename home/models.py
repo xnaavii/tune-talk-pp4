@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 class Artist(models.Model):
     artist_id = models.CharField(primary_key=True, max_length=50)
@@ -28,3 +29,12 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Review(models.Model):
+    album= models.ForeignKey(Album, related_name="reviews", on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
