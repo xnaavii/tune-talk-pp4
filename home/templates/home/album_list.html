@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tune-Talk</title>
+</head>
+<body>
+    {% for album in albums %}
+    <h1>{{ album.name }}</h1>
+    <h2>{{ album.artist }}</h2>
+    <h2>{{ album.release_date }}</h2>
+    <img src="{{album.artwork}}" alt="">
+    {% endfor %}
+</body>
+</html>
