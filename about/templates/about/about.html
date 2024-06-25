@@ -1,3 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            {% for about in about %}
+            <h1>{{about.title}}</h1>
+            <p>{{about.content | safe}}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock content %}
