@@ -40,12 +40,16 @@
             <!-- Display Album Reviews --> 
             {% for review in reviews %}
             <div class="card mb-3">
+                <h6 class="card-header">{{ review.author }}</h6>
                 <div class="card-body">
-                <h5 class="card-title">{{ review.title }}</h5>
-                <p class="card-text  text-body-secondary">Rated: {{ review.rating }}/5</p>
-                <p class="card-text">{{review.body}}</p>
-                <p class="card-text">{{ review.author }} <small>{{ review.created_at }}</small></p>
+                    <h5 class="card-title">{{ review.title }}</h5>
+                    <p class="card-text">{{ review.body }}</p>
+                    <p class="card-text text-muted">Rating - {{ review.rating }} out of 5</p>
+                    {% if user.is_authenticated and review.author == user %}
+                        <a href="{% url 'edit_review' album_id=album.album_id review_id=review.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    {% endif %}
                 </div>
+                <div class="card-footer"><small class="text-muted">{{ review.created_at }}</small></div>
             </div>
             {% endfor %}
         </div>
@@ -65,7 +69,7 @@
                     <label for="id_body">Body</label>
                     <textarea name="body" id="id_body" class="form-control" placeholder="Write your review here"></textarea>
                 </div>
-                <button type="submit" class="btn btn btn-outline-dark mt-2">Submit Review</button>
+                <button type="submit" class="btn btn btn-dark mt-2">Submit Review</button>
             </form>
         </div>
     </div>

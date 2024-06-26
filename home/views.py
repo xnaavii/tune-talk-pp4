@@ -1,7 +1,9 @@
 from .spotify_utils import get_spotify_client
 from .models import Album, Artist, Review
 from .forms import ReviewForm
-from django.shortcuts import render, redirect
+from django.http import HttpResponseForbidden
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 from spotipy.client import SpotifyException
 
 def get_album_metadata(search):
@@ -83,21 +85,36 @@ def album_list(request):
 def album_detail(request, album_id):
 
     album_info_spotify, tracks = get_album_info(album_id)
+    # Fetch all reviews for the album
+    reviews = album_info_spotify.reviews.all()
 
     # Handle review form submission
     if request.method == "POST":
-        review_form = ReviewForm(data=request.POST)
-        if review_form.is_valid():
-            review = review_form.save(commit=False)
-            review.album = album_info_spotify
-            review.author = request.user
-            review.save()
-            return redirect('album_detail', album_id=album_id)  # Redirect after successful form submission
+        if 'review_id' in request.POST:
+            review_id = request.POST.get('review_id')
+            review = get_object_or_404(Review, id=review_id)
+
+            if 'edit' in request.POST:
+                if review.author == request.user:
+                    review_form = ReviewForm(data=request.POST, instance=review)
+                    if review_form.is_valid():
+                        review_form.save()
+                else:
+                    return HttpResponseForbidden("You are not allowed to edit this review.")
+            elif 'delete' in request.POST:
+                if review.author == request.user:
+                    review.delete()
+                else:
+                    return HttpResponseForbidden("You are not allowed to delete this review.")
+        else:
+            review_form = ReviewForm(data=request.POST)
+            if review_form.is_valid():
+                review = review_form.save(commit=False)
+                review.author = request.user
+                review.album = album_info_spotify
+                review.save()
     else:
         review_form = ReviewForm()
-
-    # Fetch all reviews for the album
-    reviews = album_info_spotify.reviews.all()
 
     context = {
         "album": album_info_spotify,
@@ -108,6 +125,25 @@ def album_detail(request, album_id):
 
     return render(request, 'home/album_detail.html', context)
 
+def edit_review(request, album_id, review_id):
+    album = get_object_or_404(Album, album_id=album_id)
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.user == review.author:
+        form = ReviewForm(request.POST or None, instance=review)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Review updated successfully.')
+                return redirect('album_detail', album_id=album_id)
+        context = {
+            'album': album,
+            'form': form,
+        }
+        return render(request, 'home/edit_review.html', context)
+    else:
+        messages.error(request, 'You are not allowed to edit this review.')
+        return redirect('album_detail', album_id=album_id)
 
 def home(request):
     return render(request, 'home/homepage.html')
