@@ -1,7 +1,7 @@
 from .spotify_utils import get_spotify_client
-from .models import Album, Artist
+from .models import Album, Artist, Review
 from .forms import ReviewForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from spotipy.client import SpotifyException
 
 def get_album_metadata(search):
@@ -84,12 +84,26 @@ def album_detail(request, album_id):
 
     album_info_spotify, tracks = get_album_info(album_id)
 
-    form = ReviewForm()
-    
+    # Handle review form submission
+    if request.method == "POST":
+        review_form = ReviewForm(data=request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.album = album_info_spotify
+            review.author = request.user
+            review.save()
+            return redirect('album_detail', album_id=album_id)  # Redirect after successful form submission
+    else:
+        review_form = ReviewForm()
+
+    # Fetch all reviews for the album
+    reviews = album_info_spotify.reviews.all()
+
     context = {
         "album": album_info_spotify,
         "tracks": tracks,
-        "form": form
+        "review_form": review_form,
+        "reviews": reviews
     }
 
     return render(request, 'home/album_detail.html', context)
