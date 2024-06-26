@@ -46,10 +46,33 @@
                     <p class="card-text">{{ review.body }}</p>
                     <p class="card-text text-muted">Rating - {{ review.rating }} out of 5</p>
                     {% if user.is_authenticated and review.author == user %}
-                        <a href="{% url 'edit_review' album_id=album.album_id review_id=review.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="{% url 'edit_review' album_id=album.album_id review_id=review.id %}" class="btn btn-outline-secondary">Edit</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteReviewModal-{{ review.id }}">
+                            Remove
+                        </button>
                     {% endif %}
                 </div>
                 <div class="card-footer"><small class="text-muted">{{ review.created_at }}</small></div>
+            </div>
+
+            <!-- Delete Review Modal -->
+            <div class="modal fade" id="deleteReviewModal-{{ review.id }}" tabindex="-1" aria-labelledby="deleteReviewModalLabel-{{ review.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteReviewModalLabel-{{ review.id }}">Confirm Deletion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to remove your review?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="{% url 'delete_review' album_id=album.album_id review_id=review.id %}" class="btn btn-danger">Remove</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -73,5 +96,6 @@
             </form>
         </div>
     </div>
+</div>
 </div>
 {% endblock content %}

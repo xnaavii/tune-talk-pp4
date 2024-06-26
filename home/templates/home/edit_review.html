@@ -2,13 +2,30 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col text-center d-flex flex-column justify-content-center align-items-center">
-            <h2 >Edit Review</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-outline-success">Update Review</button>
-            </form>
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Edit Review</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_title" class="form-label">Title</label>
+                            <input type="text" name="title" id="id_title" class="form-control" placeholder="Enter review title" value="{{ form.title.value }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_rating" class="form-label">Rating</label>
+                            <input type="number" name="rating" id="id_rating" class="form-control" placeholder="Rating" min="1" max="5" value="{{ form.rating.value }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_body" class="form-label">Body</label>
+                            <textarea name="body" id="id_body" class="form-control" rows="5" placeholder="Write your review here">{{ form.body.value }}</textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-outline-success">Update Review</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

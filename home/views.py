@@ -145,5 +145,17 @@ def edit_review(request, album_id, review_id):
         messages.error(request, 'You are not allowed to edit this review.')
         return redirect('album_detail', album_id=album_id)
 
+def delete_review(request, album_id, review_id):
+    album = get_object_or_404(Album, album_id=album_id)
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.user == review.author:
+        review.delete()
+        messages.success(request, 'Review deleted successfully.')
+    else:
+        messages.error(request, 'You are not allowed to delete this review.')
+
+    return redirect('album_detail', album_id=album_id)
+
 def home(request):
     return render(request, 'home/homepage.html')
