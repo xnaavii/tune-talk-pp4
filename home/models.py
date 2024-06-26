@@ -16,6 +16,9 @@ class Album(models.Model):
     artwork = models.URLField(blank=True, default='')
     released = models.CharField(max_length=200)
 
+    class Meta:
+        ordering = ["artist"]
+
     def average_rating(self):
         reviews = self.reviews.all()
         if reviews.exists():
@@ -34,5 +37,8 @@ class Review(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ["created_at"]
+
     def __str__(self):
-        return f"{self.title} by {self.author}"
+        return f"{self.title} by {self.author} | {self.created_at}"

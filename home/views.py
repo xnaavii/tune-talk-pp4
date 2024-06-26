@@ -158,4 +158,13 @@ def delete_review(request, album_id, review_id):
     return redirect('album_detail', album_id=album_id)
 
 def home(request):
-    return render(request, 'home/homepage.html')
+
+    albums = Album.objects.all()[:3]
+    latest_reviews = Review.objects.order_by("-created_at")
+
+    context = {
+        "albums": albums,
+        "latest_reviews": latest_reviews   
+        }
+
+    return render(request, 'home/homepage.html', context)
