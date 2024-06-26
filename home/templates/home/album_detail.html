@@ -20,5 +20,18 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-5">
+
+        </div>
+        <div class="col-md-7 mt-3">
+            <h2>Review this Album</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}

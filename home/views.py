@@ -1,5 +1,6 @@
 from .spotify_utils import get_spotify_client
 from .models import Album, Artist
+from .forms import ReviewForm
 from django.shortcuts import render
 from spotipy.client import SpotifyException
 
@@ -83,9 +84,12 @@ def album_detail(request, album_id):
 
     album_info_spotify, tracks = get_album_info(album_id)
 
+    form = ReviewForm()
+    
     context = {
         "album": album_info_spotify,
-        "tracks": tracks
+        "tracks": tracks,
+        "form": form
     }
 
     return render(request, 'home/album_detail.html', context)
