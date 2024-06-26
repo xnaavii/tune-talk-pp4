@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <img class="img-fluid rounded" src="{{ album.artwork }}" alt="Album Artwork">
+        </div>
+        <div class="col-md-7 mt-2 d-flex flex-column justify-content-between">
+            <h1>{{ album.name }}</h1>
+            <h2 class="text-muted">{{ album.artist }}</h2>
+            <p>Released: <small class="text-muted">{{ album.release_date }}</small> </p>
+            
+            <div style="max-height: 300px; overflow-y: auto;">
+                <ul class="list-group">
+                    {% for track in album.tracks %}
+                    <a href="{{ track.external_urls.spotify }}" target="_blank" class="list-group-item list-group-item-action">
+                        {{ track.track_number }}. {{ track.name }}
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

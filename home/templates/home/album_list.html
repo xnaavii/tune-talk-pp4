@@ -12,7 +12,9 @@
             {% for album in albums %}
             <div class="col-md-3 mb-3 align-items-center">
                 <div class="card h-100">
-                    <img src="{{album.artwork}}" class="card-img-top" alt="Album Artwork">
+                    <a href="{% url 'album_detail' album.id %}">
+                        <img src="{{album.artwork}}" class="card-img-top" alt="Album Artwork">
+                    </a>
                     <div class="card-body">
                     <h5 class="card-title">{{ album.name }}</h5>
                     <p class="card-text">{{ album.artist }}</p>

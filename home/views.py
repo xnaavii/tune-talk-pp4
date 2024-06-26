@@ -1,45 +1,63 @@
-import os
-import spotipy
+from .spotify_utils import get_spotify_client
 from django.shortcuts import render
-from spotipy.oauth2 import SpotifyClientCredentials
 
-def get_spotify_client():
-    """
-    Set up spotify client credentials manager
-    """
-    client_id = os.environ.get("SPOTIPY_CLIENT_ID")
-    client_secret = os.environ.get("SPOTIPY_CLIENT_SECRET")
-    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+def get_album_metadata(search):
+    sp = get_spotify_client()
 
-    return spotipy.Spotify(auth_manager=auth_manager)
+    results = sp.search(q=search, type="album")
+
+    albums = []
+
+    for album in results['albums']['items']:
+        album_info = {
+            'id': album['id'],
+            'name': album['name'],
+            'artist': album['artists'][0]['name'],
+            'release_date': album['release_date'],
+            'artwork': album['images'][0]['url'] if album['images'] else None
+        }
+        albums.append(album_info)
+        
+    return albums
+
+def get_album_info(album_data):
+    
+    album_info = {
+        'name': album_data['name'],
+        'artist': album_data['artists'][0]['name'],
+        'release_date': album_data['release_date'],
+        'artwork': album_data['images'][0]['url'] if album_data['images'] else None,
+        'tracks': album_data['tracks']['items'] if 'tracks' in album_data else []
+    }
+    return album_info
 
 def album_list(request):
 
-    sp = get_spotify_client()
-
     if request.method == "GET":
-
         search = request.GET.get("search")
-
-        results = sp.search(q=search, type="album")
-
-        albums = []
-
-        for album in results['albums']['items']:
-            album_info = {
-                'name': album['name'],
-                'artist': album['artists'][0]['name'],
-                'release_date': album['release_date'],
-                'artwork': album['images'][0]['url'] if album['images'] else None
-            }
-            albums.append(album_info)
-        
+        if search:
+            albums = get_album_metadata(search)
+        else:
+            albums = []
+    
         context = {
-            "albums": albums, "search": search
+            "albums": albums, 
+            "search": search
         }
 
-
         return render(request, "home/album_list.html", context)
+
+def album_detail(request, album_id):
+
+    sp = get_spotify_client()
+    album_data = sp.album(album_id)
+    album_info = get_album_info(album_data)
+
+    context = {
+        'album': album_info
+    }
+
+    return render(request, 'home/album_detail.html', context)
 
 
 def home(request):
