@@ -82,6 +82,7 @@
         </div>
         <div class="col-lg-6 mt-3">
             <h2>Review this Album</h2>
+            {% if user.is_authenticated %}
             <form method="post">
                 {% csrf_token %}
                 <div class="form-group">
@@ -98,6 +99,12 @@
                 </div>
                 <button type="submit" class="btn btn btn-dark mt-2">Submit Review</button>
             </form>
+            {% else %}
+            <a href="{% url 'account_login' %}" class="btn btn-dark">Log In</a>
+            <span class="text-muted">or</span>
+            <a href="{% url 'account_signup' %}" class="btn btn-outline-dark">Register</a>
+            <span class="text-muted">to leave a review.</span>
+            {% endif %}
         </div>
     </div>
 </div>
