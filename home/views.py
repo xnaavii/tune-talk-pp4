@@ -35,7 +35,7 @@ def album_list(request):
             albums.append(album_info)
         
         context = {
-            "albums": albums
+            "albums": albums, "search": search
         }
 
 

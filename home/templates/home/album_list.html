@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container mt-4">
-        <div class="row">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6  text-center">
+                <h2>Showing results for: <span class="text-muted">"{{ search }}"</span> </h2>
+            </div>
+        </div>
+
+        <div class="row mt-2">
             {% for album in albums %}
             <div class="col-md-3 mb-3 align-items-center">
                 <div class="card h-100">
@@ -10,7 +16,6 @@
                     <div class="card-body">
                     <h5 class="card-title">{{ album.name }}</h5>
                     <p class="card-text">{{ album.artist }}</p>
-                    <p class="card-text">{{ album.release_date }}</p>
                     </div>
                 </div>
             </div>

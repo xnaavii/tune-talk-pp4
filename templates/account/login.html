@@ -1,51 +1,48 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load allauth account %}
+{% load account %}
 {% block head_title %}
     {% trans "Sign In" %}
 {% endblock head_title %}
 {% block content %}
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            {% element h1 %}
-            {% trans "Sign In" %}
-        {% endelement %}
-        {% if not SOCIALACCOUNT_ONLY %}
-            {% setvar link %}
-                <a href="{{ signup_url }}">
-                {% endsetvar %}
-                {% setvar end_link %}
-                </a>
-            {% endsetvar %}
-            {% element p %}
-                {% blocktranslate %}If you have not created an account yet, then please {{ link }}sign up{{ end_link }} first.{% endblocktranslate %}
-            {% endelement %}
-            {% url 'account_login' as login_url %}
-            {% element form form=form method="post" action=login_url tags="entrance,login" %}
-                {% slot body %}
+        <div class="col-md-6 mt-5">
+            <h1 class="text-center mb-4">{% trans "Sign In" %}</h1>
+            {% if not SOCIALACCOUNT_ONLY %}
+                <p class="text-center mb-4">
+                    {% blocktrans %}
+                        If you have not created an account yet, then please 
+                        <a href="{{ signup_url }}" class="text-decoration-none">sign up</a> 
+                        first.
+                    {% endblocktrans %}
+                </p>
+                {% url 'account_login' as login_url %}
+                <form method="post" action="{{ login_url }}">
                     {% csrf_token %}
-                    {% element fields form=form unlabeled=True %}
-                    {% endelement %}
+                    {{ form.as_p }}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
                     {{ redirect_field }}
-                {% endslot %}
-                {% slot actions %}
-                    <button class="btn btn-outline-dark" type="submit" tags="prominent,login">{% trans "Sign In" %}</button>
-                {% endslot %}
-            {% endelement %}
-        {% endif %}
-        {% if LOGIN_BY_CODE_ENABLED %}
-            {% element hr %}
-            {% endelement %}
-            {% element h2 %}
-                {% element button href=request_login_code_url tags="prominent,login,secondary" %}
-                    {% trans "Mail me a sign-in code" %}
-                {% endelement %}
-            {% endelement %}
-        {% endif %}
-        {% if SOCIALACCOUNT_ENABLED %}
-            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-        {% endif %}
+                    <div class="d-grid">
+                        <button class="btn btn-outline-dark" type="submit">{% trans "Sign In" %}</button>
+                    </div>
+                </form>
+            {% endif %}
+            {% if LOGIN_BY_CODE_ENABLED %}
+                <hr>
+                <div class="d-grid mt-4">
+                    <a href="{{ request_login_code_url }}" class="btn btn-outline-secondary">{% trans "Mail me a sign-in code" %}</a>
+                </div>
+            {% endif %}
+            {% if SOCIALACCOUNT_ENABLED %}
+                <div class="mt-4">
+                    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>  

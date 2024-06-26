@@ -1,25 +1,26 @@
-{% extends "account/base_manage.html" %}
-{% load allauth i18n %}
+{% extends "base.html" %}
+{% load i18n %}
+{% load account %}
 {% block head_title %}
     {% trans "Sign Out" %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Out" %}
-    {% endelement %}
-    {% element p %}
-        {% trans 'Are you sure you want to sign out?' %}
-    {% endelement %}
-    {% url 'account_logout' as action_url %}
-    {% element form method="post" action=action_url no_visible_fields=True %}
-        {% slot body %}
-            {% csrf_token %}
-            {{ redirect_field }}
-        {% endslot %}
-        {% slot actions %}
-            {% element button type="submit" %}
-                {% trans 'Sign Out' %}
-            {% endelement %}
-        {% endslot %}
-    {% endelement %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-5">
+            <h1 class="text-center mb-4">{% trans "Sign Out" %}</h1>
+            <p class="text-center mb-4">
+                {% trans 'Are you sure you want to sign out?' %}
+            </p>
+            {% url 'account_logout' as logout_url %}
+            <form method="post" action="{{ logout_url }}">
+                {% csrf_token %}
+                {{ redirect_field }}
+                <div class="d-grid">
+                    <button class="btn btn-outline-danger" type="submit">{% trans "Sign Out" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}
