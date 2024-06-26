@@ -1,5 +1,7 @@
 from .spotify_utils import get_spotify_client
+from .models import Album, Artist
 from django.shortcuts import render
+from spotipy.client import SpotifyException
 
 def get_album_metadata(search):
     sp = get_spotify_client()
@@ -20,16 +22,46 @@ def get_album_metadata(search):
         
     return albums
 
-def get_album_info(album_data):
-    
-    album_info = {
-        'name': album_data['name'],
-        'artist': album_data['artists'][0]['name'],
-        'release_date': album_data['release_date'],
-        'artwork': album_data['images'][0]['url'] if album_data['images'] else None,
-        'tracks': album_data['tracks']['items'] if 'tracks' in album_data else []
-    }
-    return album_info
+def get_album_info(album_id):
+    sp = get_spotify_client()
+    album_data = sp.album(album_id)
+
+    try:
+        album_data = sp.album(album_id)
+    except SpotifyException as e:
+        # Handle Spotify API exception
+        print(f"Error fetching album data for {album_id}: {e}")
+        return None
+
+    if not album_data:
+        print(f"Album data for {album_id} is None")
+        return None
+
+    # Save artist if not already in the database
+    artist_data = album_data['artists'][0]
+    artist, _ = Artist.objects.get_or_create(
+        artist_id=artist_data['id'],
+        defaults={'artist_name': artist_data['name']}
+    )
+
+    # Save album
+    album, _ = Album.objects.get_or_create(
+        album_id=album_id,
+        defaults={
+            'album_id': album_id,
+            'title': album_data['name'],
+            'artist': artist,
+            'released': album_data['release_date'],
+            'artwork': album_data['images'][0]['url'] if album_data['images'] else None,
+        }
+    ) 
+
+    # Extract tracks from album data 
+    tracks = []
+    if 'tracks' in album_data:
+        tracks = album_data['tracks']['items']
+
+    return album, tracks
 
 def album_list(request):
 
@@ -49,12 +81,11 @@ def album_list(request):
 
 def album_detail(request, album_id):
 
-    sp = get_spotify_client()
-    album_data = sp.album(album_id)
-    album_info = get_album_info(album_data)
+    album_info_spotify, tracks = get_album_info(album_id)
 
     context = {
-        'album': album_info
+        "album": album_info_spotify,
+        "tracks": tracks
     }
 
     return render(request, 'home/album_detail.html', context)
