@@ -1,6 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for i in test %}
-{{i}}
-{% endfor %}
+<div class="container">
+    <div class="row">
+        <h2 class="text-center">Reviews</h2>
+        <div class="col-md-12">
+            <div class="row mt-4">
+                {% for review in reviews|dictsortreversed:"created_at" %}
+                <div class="col-md-4 mb-3">
+                    <div class="list-group">
+                        <a href="{% url 'album_detail' album_id=review.album.album_id %}" class="list-group-item list-group-item-action" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{review.title}}</h5>
+                                <small>{{review.author}}</small>
+                            </div>
+                            <p class="mb-1">{{review.album.title}}</p>
+                            <small class="text-muted">{{review.created_at}}</small>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
