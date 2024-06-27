@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <div class="container">
-        <h2 class="text-center">Top Charts</h2>
-    
+        <h2 class="text-center mb-4">Top Album</h2>
+        <p class="text-center mb-4">This is the top-rated album based on user reviews and ratings.</p>
+        <!-- Display Top Album -->
+        <div class="d-flex justify-content-center">
+        {% if top_album %}
+        <div class="card bg-dark text-white position-relative" style="max-width: 500px;">
+            <span class="position-absolute top-0 start-0 bg-dark bg-opacity-50 rounded text-light p-3">
+                #1<span class="visually-hidden">{{ top_album.review_count }}</span>
+            </span>
+            <img src="{{ top_album.artwork }}" class="card-img-top" alt="{{ top_album.title }}" style="height: 300px; object-fit: cover;">
+            <div class="card-img-overlay d-flex flex-column justify-content-end">
+                <h5 class="card-title">{{ top_album.title }}</h5>
+                <p class="card-text">Average Rating: {{ top_album.average_rating|floatformat:1 }}</p>
+                <p class="card-text">Number of Reviews: {{ top_album.review_count }}</p>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center">No top album available.</p>
+        {% endif %}
+    </div>
         <div class="row">
             <!-- Top Rated Albums -->
-            <div class="col-md-6 mt-2 p-1">
-                <h3 class="text-center">Top Rated Albums</h3>
+            <div class="col-md-6 mt-3 mb-2 p-1">
+                <h3 class="text-center mb-4">Top 5 Albums by Rating</h3>
+                <p class="text-center mb-4">These albums have received the highest ratings from users.</p>
                 <ul class="list-group">
                     {% for album in top_albums %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -21,11 +39,12 @@
                     </li>
                     {% endfor %}
                 </ul>
-        </div>
+            </div>
 
         <!-- Most Reviewed Albums -->
-        <div class="col-md-6 mt-2 p-1">
-            <h3 class="text-center">Most Reviewed Albums</h3>
+        <div class="col-md-6 mt-3 mb-2 p-1">
+            <h3 class="text-center mb-4">Top 5 Albums by Reviews</h3>
+            <p class="text-center mb-4">These albums have received the most reviews from users.</p>
             <ul class="list-group">
                 {% for album in most_reviewed_albums %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -42,5 +61,5 @@
         </div>
     </div>
 </div>
-</div>
+
 {% endblock content %}

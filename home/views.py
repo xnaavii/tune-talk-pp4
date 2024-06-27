@@ -160,9 +160,13 @@ def delete_review(request, album_id, review_id):
 
 def home(request):
     # Query albums with an average rating less than or equal to 5, annotated with average rating and count of reviews
-    albums = Album.objects.annotate(average_rating=Avg('reviews__rating')).annotate(num_reviews=Count('reviews')).filter(average_rating__lte=5)
+    albums = Album.objects.annotate(
+        average_rating=Avg('reviews__rating'),
+        num_reviews=Count('reviews')
+        ).filter(average_rating__lte=5)
+    
     albums = albums.order_by('-average_rating','-num_reviews')[:3]
-    latest_reviews = Review.objects.all().order_by("-created_at")[:6]
+    latest_reviews = Review.objects.all().order_by("-created_at")[:3]
 
     context = {
         "albums": albums,
