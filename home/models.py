@@ -17,7 +17,7 @@ class Album(models.Model):
     released = models.CharField(max_length=200)
 
     class Meta:
-        ordering = ["artist"]
+        ordering = ["title"]
 
     def average_rating(self):
         reviews = self.reviews.all()

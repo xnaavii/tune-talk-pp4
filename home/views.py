@@ -2,6 +2,7 @@ from .spotify_utils import get_spotify_client
 from .models import Album, Artist, Review
 from .forms import ReviewForm
 from django.http import HttpResponseForbidden
+from django.db.models import Avg, Count
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from spotipy.client import SpotifyException
@@ -158,9 +159,10 @@ def delete_review(request, album_id, review_id):
     return redirect('album_detail', album_id=album_id)
 
 def home(request):
-
-    albums = Album.objects.all()[:3]
-    latest_reviews = Review.objects.order_by("-created_at")
+    # Query albums with an average rating less than or equal to 5, annotated with average rating and count of reviews
+    albums = Album.objects.annotate(average_rating=Avg('reviews__rating')).annotate(num_reviews=Count('reviews')).filter(average_rating__lte=5)
+    albums = albums.order_by('-average_rating','-num_reviews')[:3]
+    latest_reviews = Review.objects.all()[:6]
 
     context = {
         "albums": albums,
