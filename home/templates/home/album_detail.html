@@ -43,7 +43,7 @@
         <div class="col-lg-6">
             <h2 class="mt-3">Reviews</h2>
             {% for review in reviews|dictsortreversed:"created_at" %}
-            <div class="card mb-3  {% if user.is_authenticated and review.author == user %}bg-secondary bg-opacity-10{% endif %}">
+            <div class="card mb-3  {% if user.is_authenticated and review.author == user %}bg-success bg-opacity-10{% endif %}">
                 <h6 class="card-header">{{ review.author }}</h6>
                 <div class="card-body">
                     <h5 class="card-title">{{ review.title }}</h5>

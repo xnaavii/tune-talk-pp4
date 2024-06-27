@@ -2,10 +2,19 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <h2 class="text-center">Reviews</h2>
+        <h2 class="text-center">All Reviews</h2>
         <div class="col-md-12">
+            <!-- Search Form -->
+            <form method="GET" class="mb-3 mt-2 p-3">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search reviews" value="{{ search_term }}">
+                    <button type="submit" class="btn btn-outline-secondary">Search</button>
+                    <a href="{% url 'reviews' %}" class="btn btn-dark ml-2">Clear</a>
+                </div>
+            </form>
+            <!-- Display Reviews -->
             <div class="row mt-4">
-                {% for review in reviews|dictsortreversed:"created_at" %}
+                {% for review in all_reviews %}
                 <div class="col-md-4 mb-3">
                     <div class="list-group">
                         <a href="{% url 'album_detail' album_id=review.album.album_id %}" class="list-group-item list-group-item-action" aria-current="true">
