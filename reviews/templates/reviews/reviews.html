@@ -15,7 +15,7 @@
             <!-- Display Reviews -->
             <div class="row mt-4">
                 {% for review in all_reviews %}
-                <div class="col-md-4 mb-3">
+                <div class="col-md-12 mb-3">
                     <div class="list-group">
                         <a href="{% url 'album_detail' album_id=review.album.album_id %}" class="list-group-item list-group-item-action" aria-current="true">
                             <div class="d-flex w-100 justify-content-between">

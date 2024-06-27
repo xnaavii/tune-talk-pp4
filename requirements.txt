@@ -8,6 +8,7 @@ django-allauth==0.63.3
 django-summernote==0.8.20.0
 gunicorn==22.0.0
 idna==3.7
+mock==5.1.0
 packaging==24.1
 psycopg2==2.9.9
 redis==5.0.6
