@@ -29,6 +29,9 @@
                 <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {% if request.path == '/charts/' %}active{% endif %}" aria-current="page" href="{% url 'charts' %}">Charts</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url "about_page" %}">About</a>
             </li>
             <li class="nav-item">
