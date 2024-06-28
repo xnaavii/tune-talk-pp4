@@ -4,6 +4,6 @@ setTimeout(function() {
         alert.classList.add('show');
         setTimeout(function() {
             alert.remove(); // Remove the alert from DOM
-        }, 1000); // Adjust this timeout as needed for fade duration
+        }, 3000); // Adjust this timeout as needed for fade duration
     });
 }, 1500);
