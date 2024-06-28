@@ -1,0 +1,8 @@
+#tune-talk{
+    text-shadow: rgba(0, 0, 0, 0.5);
+    transition: text-shadow 0.5s ease, transform 0.3s ease;
+}
+
+#tune-talk:hover {
+    color: rgba(0, 0, 0, 0.8);
+}
