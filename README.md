@@ -56,37 +56,37 @@ Tune Talk is a Django-based web application for music lovers to explore artists,
 #### Home Page Wireframes
 
 <p align="center">
-  <img src="assets/readme-files/homePage_web.png" alt="Home Page Web" style="max-width: 300px;">
-  <img src="assets/readme-files/homePage_iPad.png" alt="Home Page iPad" style="max-width: 300px;">
-  <img src="assets/readme-files/homePage_iPhone.png" alt="Home Page iPhone" style="max-width: 200px;">
+  <img src="assets/readme-files/home-web.png" alt="Home Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/home-ipad.png" alt="Home Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/home-iphone.png" alt="Home Page iPhone" style="max-width: 200px;">
 </p>
 
 #### About Page Wireframes
 <p align="center">
-  <img src="assets/readme-files/aboutPage_Web.png" alt="About Page Web" style="max-width: 300px;">
-  <img src="assets/readme-files/aboutPage_iPad.png" alt="About Page iPad" style="max-width: 300px;">
-  <img src="assets/readme-files/aboutPage_iPhone.png" alt="About Page iPhone" style="max-width: 200px;">
+  <img src="assets/readme-files/about-web.png" alt="About Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/about-ipad.png" alt="About Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/about-iphone.png" alt="About Page iPhone" style="max-width: 200px;">
 </p>
 
 #### Charts Page Wireframes
 <p align="center">
-  <img src="assets/readme-files/chartsPage_Web.png" alt="Charts Page Web" style="max-width: 300px;">
-  <img src="assets/readme-files/chartsPage_iPad.png" alt="Charts Page iPad" style="max-width: 300px;">
-  <img src="assets/readme-files/chartsPage_iPhone.png" alt="Charts Page iPhone" style="max-width: 200px;">
+  <img src="assets/readme-files/charts-web.png" alt="Charts Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/charts-ipad.png" alt="Charts Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/charts-iphone.png" alt="Charts Page iPhone" style="max-width: 200px;">
 </p>
 
 #### Album List Page Wireframes
 <p align="center">
-  <img src="assets/readme-files/AlbumList_Web.png" alt="Album List Page Web" style="max-width: 300px;">
-  <img src="assets/readme-files/AlbumList_iPad.png" alt="Album List Page iPad" style="max-width: 300px;">
-  <img src="assets/readme-files/AlbumList_iPhone.png" alt="Album List Page iPhone" style="max-width: 200px;">
+  <img src="assets/readme-files/albumlist-web.png" alt="Album List Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/albumlist-ipad.png" alt="Album List Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/albumlist-iphone.png" alt="Album List Page iPhone" style="max-width: 200px;">
 </p>
 
 #### Album Detail Page Wireframes
 <p align="center">
-  <img src="assets/readme-files/AlbumDetail_Web.png" alt="Album Detail Page Web" style="max-width: 300px;">
-  <img src="assets/readme-files/AlbumDetail_iPad.png" alt="Album Detail Page iPad" style="max-width: 300px;">
-  <img src="assets/readme-files/AlbumDetail_iPhone.png" alt="Album Detail Page iPhone" style="max-width: 200px;">
+  <img src="assets/readme-files/albumdetail-web.png" alt="Album Detail Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/albumdetail-ipad.png" alt="Album Detail Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/albumdetail-iphone.png" alt="Album Detail Page iPhone" style="max-width: 200px;">
 </p>
 
 ## Features <h5>[Back To top](#contents)</h5>
