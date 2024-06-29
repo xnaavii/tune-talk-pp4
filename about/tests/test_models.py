@@ -12,7 +12,8 @@ class TestAboutModel(TestCase):
 
     def setUp(self):
         """Set up the test environment by creating an About instance."""
-        self.about = About.objects.create(title="About Title", content="About Content")
+        self.about = About.objects.create(
+            title="About Title", content="About Content")
 
     def test_about_model_creation(self):
         """Test that an About instance is created correctly."""
@@ -45,7 +46,7 @@ class TestAboutModel(TestCase):
         self.assertEqual(
             str(self.about),
             "About Title",
-            msg="The About instance string representation does not match the expected value",
+            msg="The About instance string doesn't match the expected value"
         )
 
     def test_about_model_update(self):

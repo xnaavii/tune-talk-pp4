@@ -19,7 +19,8 @@ class TestHomeViews(TestCase):
 
         self.album = Album.objects.create(
             album_id="6vuykQgDLUCiZ7YggIpLM9",
-            title="Test Album",  # Make sure this title matches your expected test case
+            # Make sure this title matches your expected test case
+            title="Test Album",
             artist=self.artist,
             artwork="http://www.artwork.com",
             released=datetime(2000, 1, 29),
@@ -39,7 +40,9 @@ class TestHomeViews(TestCase):
 
         # URLs for testing
         self.album_list_url = reverse("album_list")
-        self.album_detail_url = reverse("album_detail", args=[self.album.album_id])
+        self.album_detail_url = reverse(
+            "album_detail", args=[self.album.album_id]
+            )
         self.edit_review_url = reverse(
             "edit_review", args=[self.album.album_id, 1]
         )  # Review ID will be set in the test
@@ -68,7 +71,8 @@ class TestHomeViews(TestCase):
         # Mock Spotify API response
         mock_album_data = {
             "id": "test_album_id",
-            "name": "Test Album",  # Adjust the expected name here
+            # Adjust the expected name here
+            "name": "Test Album",
             "artists": [{"name": "Test Artist"}],
             "release_date": "2024-01-01",
             "images": [{"url": "https://example.com/image.jpg"}],
@@ -99,8 +103,12 @@ class TestHomeViews(TestCase):
         response_post = self.client.post(
             reverse("album_detail", args=[self.album.album_id]), review_data
         )
-        self.assertEqual(response_post.status_code, 302)  # Should redirect after POST
-        self.assertTrue(Review.objects.filter(body="This album is awesome!").exists())
+        self.assertEqual(
+            response_post.status_code, 302
+            )  # Should redirect after POST
+        self.assertTrue(
+            Review.objects.filter(body="This album is awesome!").exists()
+            )
 
     @patch(
         "home.spotify_utils.get_spotify_client"
@@ -127,8 +135,12 @@ class TestHomeViews(TestCase):
             "body": "This album is awesome!",
         }
         response_post = self.client.post(self.album_detail_url, review_data)
-        self.assertEqual(response_post.status_code, 302)  # Should redirect after POST
-        self.assertTrue(Review.objects.filter(body="This album is awesome!").exists())
+        self.assertEqual(
+            response_post.status_code, 302
+            )  # Should redirect after POST
+        self.assertTrue(
+            Review.objects.filter(body="This album is awesome!").exists()
+            )
 
     def test_edit_review_view_GET(self):
         """
@@ -136,9 +148,10 @@ class TestHomeViews(TestCase):
         """
         # Create a review for the album
         review = self.review
-
         # Make request to edit_review view
-        edit_url = reverse("edit_review", args=[self.album.album_id, review.id])
+        edit_url = reverse(
+            "edit_review", args=[self.album.album_id, review.id]
+            )
         response = self.client.get(edit_url)
         self.assertEqual(
             response.status_code,
@@ -157,7 +170,9 @@ class TestHomeViews(TestCase):
         # Create a review for the album
         review = self.review
 
-        edit_url = reverse("edit_review", args=[self.album.album_id, review.id])
+        edit_url = reverse(
+            "edit_review", args=[self.album.album_id, review.id]
+            )
         # Update review data
         updated_review_data = {
             "title": "Updated Review",
@@ -171,7 +186,9 @@ class TestHomeViews(TestCase):
             302,
             msg="Edit review view did not redirect after POST",
         )
-        self.assertTrue(Review.objects.filter(body="Updated review body").exists())
+        self.assertTrue(
+            Review.objects.filter(body="Updated review body").exists()
+            )
 
     def test_delete_review_view_POST(self):
 
@@ -179,7 +196,9 @@ class TestHomeViews(TestCase):
         review = self.review
 
         # Make request to delete_review view
-        delete_url = reverse("delete_review", args=[self.album.album_id, review.id])
+        delete_url = reverse(
+            "delete_review", args=[self.album.album_id, review.id]
+            )
         response = self.client.post(delete_url)
         self.assertEqual(
             response.status_code,
@@ -195,14 +214,18 @@ class TestHomeViews(TestCase):
         """Test home view for rendering and context."""
         response = self.client.get(reverse("home"))
         self.assertEqual(
-            response.status_code, 200, msg="Home view did not return 200 status code"
+            response.status_code, 200,
+            msg="Home view did not return 200 status code"
         )
         self.assertTemplateUsed(response, "home/homepage.html")
 
         # Check if albums and latest_reviews are in the context
-        self.assertIn("albums", response.context, msg="Context missing 'albums'")
         self.assertIn(
-            "latest_reviews", response.context, msg="Context missing 'latest_reviews'"
+            "albums", response.context,
+            msg="Context missing 'albums'")
+        self.assertIn(
+            "latest_reviews", response.context,
+            msg="Context missing 'latest_reviews'"
         )
 
         # Check if there are no albums with average rating > 5
@@ -224,5 +247,5 @@ class TestHomeViews(TestCase):
                     self.assertGreaterEqual(
                         albums[i].num_reviews,
                         albums[i + 1].num_reviews,
-                        msg="Albums not ordered correctly by number of reviews",
+                        msg="Albums not ordered correctly by num of reviews",
                     )

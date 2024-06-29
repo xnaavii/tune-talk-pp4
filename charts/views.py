@@ -21,9 +21,11 @@ def charts(request):
     else:
         top_album = None
 
-    # Fetch the next top 5 albums based on average rating, excluding the top album
+    # Fetch the next top 5 albums based on average rating
+    # excluding the top album
     top_albums = (
-        albums_with_rating.exclude(pk=top_album.pk).order_by("-average_rating")[:5]
+        albums_with_rating.exclude(
+            pk=top_album.pk).order_by("-average_rating")[:5]
         if top_album
         else []
     )

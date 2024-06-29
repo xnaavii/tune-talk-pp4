@@ -89,13 +89,16 @@ class TestChartsView(TestCase):
             album=self.album3, author=self.user, rating=1, body="Bad album"
         )
         Review.objects.create(
-            album=self.album4, author=self.user, rating=5, body="Excellent album"
+            album=self.album4,
+            author=self.user, rating=5, body="Excellent album"
         )
         Review.objects.create(
-            album=self.album5, author=self.user, rating=5, body="Excellent album"
+            album=self.album5,
+            author=self.user, rating=5, body="Excellent album"
         )
         Review.objects.create(
-            album=self.album6, author=self.user, rating=5, body="Excellent album"
+            album=self.album6,
+            author=self.user, rating=5, body="Excellent album"
         )
 
     def test_charts_view_status_code(self):
@@ -117,16 +120,22 @@ class TestChartsView(TestCase):
         )
 
     def test_charts_view_context_top_album(self):
-        """Test that the top album is correctly determined and passed to the context."""
+        """
+        Test where top album is correctly determined and passed to the context.
+        """
         response = self.client.get(reverse("charts"))
         top_album = response.context["top_album"]
         self.assertIsNotNone(top_album, msg="Top album is not in the context")
         self.assertEqual(
-            top_album.title, "Album 4", msg="Top album is not the expected album"
+            top_album.title,
+            "Album 4", msg="Top album is not the expected album"
         )
 
     def test_charts_view_context_top_albums(self):
-        """Test that the top albums (excluding the top album) are correctly determined and passed to the context."""
+        """
+        Test that the top albums (excluding the top album)
+        are correctly determined and passed to the context.
+        """
         response = self.client.get(reverse("charts"))
         top_albums = response.context["top_albums"]
         self.assertEqual(
@@ -139,7 +148,9 @@ class TestChartsView(TestCase):
         )
 
     def test_charts_view_context_most_reviewed_albums(self):
-        """Test that the most reviewed albums are correctly determined and passed to the context."""
+        """Test that the most reviewed albums are
+        correctly determined and passed to the context.
+        """
         response = self.client.get(reverse("charts"))
         most_reviewed_albums = response.context["most_reviewed_albums"]
         self.assertEqual(

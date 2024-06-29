@@ -34,7 +34,9 @@ class Album(models.Model):
 
 
 class Review(models.Model):
-    album = models.ForeignKey(Album, related_name="reviews", on_delete=models.CASCADE)
+    album = models.ForeignKey(
+        Album, related_name="reviews", on_delete=models.CASCADE
+        )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     rating = models.PositiveSmallIntegerField(

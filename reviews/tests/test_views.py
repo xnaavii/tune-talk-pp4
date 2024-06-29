@@ -99,7 +99,8 @@ class TestReviewsView(TestCase):
 
     def test_reviews_view_search_body(self):
         """Test the search functionality by body."""
-        response = self.client.get(self.reviews_url, {"search": "review body 2"})
+        response = self.client.get(
+            self.reviews_url, {"search": "review body 2"})
         self.assertEqual(
             response.context["all_reviews"].count(),
             1,

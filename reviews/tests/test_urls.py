@@ -7,7 +7,8 @@ class TestChartsUrls(SimpleTestCase):
     """
     Test URL routing for the reviews app.
 
-    This class defines test cases to verify that each URL in the reviews app correctly
+    This class defines test cases to verify that
+    each URL in the reviews app correctly
     resolves to its corresponding view function.
     """
 

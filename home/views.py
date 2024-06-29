@@ -20,7 +20,8 @@ def get_album_metadata(request, search):
                 "name": album["name"],
                 "artist": album["artists"][0]["name"],
                 "release_date": album["release_date"],
-                "artwork": album["images"][0]["url"] if album["images"] else None,
+                "artwork": album["images"][0]["url"]
+                if album["images"] else None,
             }
             albums.append(album_info)
     except SpotifyException as e:
@@ -39,7 +40,10 @@ def get_album_info(request, album_id):
         album_data = sp.album(album_id)
     except SpotifyException:
         # Display error message if Spotify API fails
-        messages.error(request, f"Error fetching album data for {album_id}: {e}")
+        messages.error(
+                    request,
+                    f"Error fetching album data for {album_id}: {e}"
+                    )
         return None, []
 
     if not album_data:
@@ -49,7 +53,8 @@ def get_album_info(request, album_id):
     # Save artist if not already in the database
     artist_data = album_data["artists"][0]
     artist, _ = Artist.objects.get_or_create(
-        artist_id=artist_data["id"], defaults={"artist_name": artist_data["name"]}
+        artist_id=artist_data["id"],
+        defaults={"artist_name": artist_data["name"]}
     )
 
     # Save album
@@ -60,7 +65,8 @@ def get_album_info(request, album_id):
             "title": album_data["name"],
             "artist": artist,
             "released": album_data["release_date"],
-            "artwork": album_data["images"][0]["url"] if album_data["images"] else None,
+            "artwork": album_data["images"][0]["url"]
+            if album_data["images"] else None,
         },
     )
 
@@ -80,7 +86,9 @@ def album_list(request):
         if search:
             albums = get_album_metadata(request, search)
             if not albums:
-                messages.info(request, "No albums found for your search query.")
+                messages.info(
+                    request,
+                    "No albums found for your search query.")
         else:
             albums = []
 
@@ -109,7 +117,8 @@ def album_detail(request, album_id):
                 return redirect("album_detail", album_id=album_id)
             else:
                 messages.error(
-                    request, "Failed to add review. Please correct the errors below."
+                    request,
+                    "Failed to add review. Please correct the errors below."
                 )
         else:
             review_form = ReviewForm()
@@ -141,7 +150,8 @@ def edit_review(request, album_id, review_id):
                 return redirect("album_detail", album_id=album_id)
             else:
                 messages.error(
-                    request, "Failed to update review. Please correct the errors below."
+                    request,
+                    "Failed to update review. Please correct the errors below."
                 )
         context = {
             "album": album,
@@ -167,10 +177,14 @@ def delete_review(request, album_id, review_id):
     return redirect("album_detail", album_id=album_id)
 
 
-# Home view to display top 3 albums with an average rating <= 5 and the latest 3 reviews
 def home(request):
+    """
+    Home view to display top 3 albums with
+    an average rating <= 5 and the latest 3 reviews
+    """
     try:
-        # Query albums with an average rating less than or equal to 5, annotated with average rating and count of reviews
+        # Query albums with an average rating less than or equal to 5,
+        # annotated with average rating and count of reviews
         albums = Album.objects.annotate(
             average_rating=Avg("reviews__rating"), num_reviews=Count("reviews")
         ).filter(average_rating__lte=5)
