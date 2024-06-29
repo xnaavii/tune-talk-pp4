@@ -15,7 +15,7 @@
                     {% for album in albums %}
                         <button type="button" data-bs-target="#albumCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
                         class="{% if forloop.first %}active{% endif %}" 
-                        aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}">
+                        aria-label="Slide {{ forloop.counter }}">
                         </button>
                     {% endfor %}
                 </div>

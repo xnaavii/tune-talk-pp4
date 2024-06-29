@@ -27,14 +27,14 @@
     <div class="row mt-2">
         <h2>Track List</h2>
         <div style="max-height: 300px; overflow-y: auto;">
-            <ul class="list-group">
+            <div class="list-group">
                 <!-- Display Track List with Links -->
                 {% for track in tracks %}
                 <a href="{{ track.external_urls.spotify }}" target="_blank" class="list-group-item list-group-item-action">
                     {{ track.track_number }}. {{ track.name }}
                 </a>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
     </div>
     
@@ -117,6 +117,5 @@
             {% endif %}
         </div>
     </div>
-</div>
 </div>
 {% endblock content %}

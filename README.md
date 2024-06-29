@@ -1,131 +1,256 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+<h1 align="center">Tune Talk 🎶</h1>
 
-Welcome USER_NAME,
+[View the live website here.](https://tune-talk-pp4-a02a2c2e4282.herokuapp.com/)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+## Project Rationale
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+Tune Talk is a Django-based web application for music lovers to explore artists, albums, and write reviews. Users can register, log in, and share their thoughts on various albums. The application uses the Spotipy library to fetch data from the Spotify API.
 
-## Gitpod Reminders
+<h2 align="center"><img src="assets/readme-files/tunetalk_home.png" style="max-width: 100vh;"></h2>
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## CONTENT
 
-`python3 -m http.server`
+* [Design](#design)
+  * [Imagery](#imagery)
+  * [Wireframes](#wireframes)
 
-A blue button should appear to click: _Make Public_,
+* [Features](#features)
+  * [General Features on Each Page](#general-features-on-each-page)
+  * [Home Page](#home-page)
+  * [About Page](#about-page)
+  * [Charts Page](#charts-page)
+  * [Album List Page](#album_list-page)
 
-Another blue button should appear to click: _Open Browser_.
+* [Technologies Used](#technologies-used)
+  * [Languages Used](#languages-used)
+  * [Frameworks, Libraries & Programs Used](#frameworks-libraries--programs-used)
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+* [Entity-Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
 
-A blue button should appear to click: _Make Public_,
+* [Testing](#testing)
+  * [Code Validation](#code-validation)
+  * [Accessibility and Performance Test](#accessibility-and-performance-test)
+  * [Feature Testing](#feature-testing)
+  * [Browser Support Testing](#browser-support-testing)
+  * [Device Compatibility](#device-compatibility)
+  * [Tools Testing](#tools-testing)
 
-Another blue button should appear to click: _Open Browser_.
+* [Bugs](#bugs)
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+* [Credits](#credits)
+  * [Code](#code)
+  * [Content](#content)
+  * [Media](#media)
+  * [Acknowledgements](#acknowledgements)
 
-To log into the Heroku toolbelt CLI:
+## Design <h5>[Back To top](#contents)</h5>
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+### Imagery
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+* Images were chosen to complement the music theme, with album artwork and artist images being prominently featured. Media content was provided by Spotify and retrieved using the Spotipy library.
 
-### Connecting your Mongo database
+### Wireframes
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+* Wireframes were created to plan the layout and structure of the application. There are wireframes for web, iPad, and iPhone, with 5 pages wireframed and 3 variations for each page.
 
-------
+#### Home Page Wireframes
 
-## Release History
+<p align="center">
+  <img src="assets/readme-files/homePage_web.png" alt="Home Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/homePage_iPad.png" alt="Home Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/homePage_iPhone.png" alt="Home Page iPhone" style="max-width: 200px;">
+</p>
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+#### About Page Wireframes
+<p align="center">
+  <img src="assets/readme-files/aboutPage_Web.png" alt="About Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/aboutPage_iPad.png" alt="About Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/aboutPage_iPhone.png" alt="About Page iPhone" style="max-width: 200px;">
+</p>
 
-**June 18, 2024,** Add Mongo back into template
+#### Charts Page Wireframes
+<p align="center">
+  <img src="assets/readme-files/chartsPage_Web.png" alt="Charts Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/chartsPage_iPad.png" alt="Charts Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/chartsPage_iPhone.png" alt="Charts Page iPhone" style="max-width: 200px;">
+</p>
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+#### Album List Page Wireframes
+<p align="center">
+  <img src="assets/readme-files/AlbumList_Web.png" alt="Album List Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/AlbumList_iPad.png" alt="Album List Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/AlbumList_iPhone.png" alt="Album List Page iPhone" style="max-width: 200px;">
+</p>
 
-**May 28 2024:** Fix Mongo and Links installs
+#### Album Detail Page Wireframes
+<p align="center">
+  <img src="assets/readme-files/AlbumDetail_Web.png" alt="Album Detail Page Web" style="max-width: 300px;">
+  <img src="assets/readme-files/AlbumDetail_iPad.png" alt="Album Detail Page iPad" style="max-width: 300px;">
+  <img src="assets/readme-files/AlbumDetail_iPhone.png" alt="Album Detail Page iPhone" style="max-width: 200px;">
+</p>
 
-**April 26 2024:** Update node version to 16
+## Features <h5>[Back To top](#contents)</h5>
 
-**September 20 2023:** Update Python version to 3.9.17.
+### General Features on Each Page
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+* **Navigation Bar**
+  * Allows users to easily navigate to different sections of the site.
+  * Features include links to the home page, about page, register, and sign-in pages.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+### Home Page
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+* **Album List**
+  * Displays a list of albums with their artwork, titles, and average ratings fetched from the Spotify API.
+  * Users can click on an album to view more details and reviews.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+### About Page
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+* **About Information**
+  * Provides information about the purpose and mission of the site.
+  * Details the inspiration behind Tune Talk and its features.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+### Register Page
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+* **Registration Form**
+  * Allows new users to create an account.
+  * Users need to provide a username, email, and password.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+### Sign In Page
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+* **Login Form**
+  * Allows existing users to log in.
+  * Users need to provide their username and password.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+## Technologies Used <h5>[Back To top](#contents)</h5>
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+### Languages Used
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+* [Python](https://www.python.org/)
+* [HTML5](https://en.wikipedia.org/wiki/HTML5)
+* [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
+* [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+### Frameworks, Libraries & Programs Used
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+* [Django](https://www.djangoproject.com/)
+  * Used as the web framework for developing the application.
+* [Bootstrap](https://getbootstrap.com/)
+  * Used for responsive design and styling.
+* [jQuery](https://jquery.com/)
+  * Used for DOM manipulation and event handling.
+* [Font Awesome](https://fontawesome.com/)
+  * Used for icons.
+* [Spotipy](https://spotipy.readthedocs.io/)
+  * Used to fetch data from the Spotify API.
+* [Mock](https://mock.readthedocs.io/en/latest/)
+  * Used to mock data for Spotify API tests.
+* [Git](https://git-scm.com/)
+  * Used for version control.
+* [GitHub](https://github.com/)
+  * Used to store the project's code.
 
-------
+## Entity-Relationship Diagram (ERD) <h5>[Back To top](#contents)</h5>
 
-## FAQ about the uptime script
+### ERD
 
-**Why have you added this script?**
+![ERD](assets/readme-files/tunetalk-erd.png)
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+* **Artist**
+  - artist_id: CharField (Primary Key)
+  - artist_name: CharField
 
-**How will this affect me?**
+* **Album**
+  - album_id: CharField (Primary Key)
+  - title: CharField
+  - artist_id: ForeignKey (Artist)
+  - artwork: URLField
+  - released: CharField
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+* **Review**
+  - id: AutoField (Primary Key)
+  - album_id: ForeignKey (Album, related_name="reviews")
+  - author_id: ForeignKey (User)
+  - title: CharField
+  - rating: PositiveSmallIntegerField
+  - body: TextField
+  - created_at: DateTimeField
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+* **About**
+  - id: AutoField (Primary Key)
+  - title: CharField
+  - content: TextField
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+## Testing <h5>[Back To top](#contents)</h5>
 
-**So….?**
+### Code Validation
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+The following validators were used to ensure code quality:
 
-**Can I opt out?**
+* [W3C HTML Validator](https://validator.w3.org/)
+* [W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
+* [PEP8 CI Python Validator](https://pep8ci.herokuapp.com/)
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+### Accessibility and Performance Test
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+* Lighthouse in Chrome DevTools was used to test accessibility and performance.
+  * Desktop Results
+  ![Lighthouse Desktop](assets/readme-files/lighthouse_desktop.png)
+  * Mobile Results
+  ![Lighthouse Mobile](assets/readme-files/lighthouse_mobile.png)
 
-**Anything more?**
+### Feature Testing
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+* **User Registration**
+  * Tested registration with valid and invalid data.
+* **Login**
+  * Tested login with correct and incorrect credentials.
+* **Review Creation**
+  * Tested creating, editing, and deleting reviews.
+* **Album List**
+  * Tested album list loading and display.
+* Testing was conducted using Django's built-in testing framework.
 
----
+### Browser Support Testing
 
-Happy coding!
+| Device/Browser | Expected Performance | Testing Performed | Result |
+| --- | --- | --- | --- |
+| Google Chrome | Full functionality | Tested all features | Passed |
+| Safari | Full functionality | Tested all features | Passed |
+| Firefox | Full functionality | Tested all features | Passed |
+| Microsoft Edge | Full functionality | Tested all features | Passed |
+
+### Device Compatibility
+
+| Device | Outcome | Pass/Fail |
+| --- | --- | --- |
+| MacBook Air M2 | No issues | Pass |
+| iPhone 15 Pro | No issues | Pass |
+| iPad Air | No issues | Pass |
+| Android Phone | No issues | Pass |
+
+### Tools Testing
+
+* [Chrome DevTools](https://developer.chrome.com/docs/devtools/)
+  * Used for debugging and testing responsiveness.
+
+## Credits <h5>[Back To top](#contents)</h5>
+
+### Code
+
+* [Django Documentation](https://docs.djangoproject.com/)
+* [Stack Overflow](https://stackoverflow.com/)
+* [CSS-Tricks](https://css-tricks.com/)
+* [W3Schools](https://www.w3schools.com/)
+
+### Content
+
+* Content was created by the developer.
+
+### Media
+
+* Media content was provided by Spotify and retrieved using the Spotipy library.
+
+### Acknowledgements
+
+* My mentor for guidance and feedback.
+* My peers for their support and testing.
